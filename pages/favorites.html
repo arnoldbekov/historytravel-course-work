@@ -103,13 +103,10 @@
 <script>
 document.addEventListener('DOMContentLoaded', () => {
   try {
-    // Отключаем AOS на мобильных для производительности
     const isMobile = window.innerWidth <= 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     if (window.AOS && !isMobile) {
       AOS.init({ duration: 800, once: true, offset: 100 });
     }
-    
-    // Всегда инициализируем мобильное меню
     if (typeof initMobileMenu === 'function') {
       initMobileMenu();
     }
@@ -131,8 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
               alert('Данные в файле sites.json некорректны.');
             }
           })
-          .catch(err => {
-            console.warn('Axios не смог загрузить данные, пробуем через fetch:', err);
+          .catch(() => {
             loadPlacesDataFallback();
           });
       } else {
@@ -166,7 +162,6 @@ document.addEventListener('DOMContentLoaded', () => {
           const errorMsg = err.message || 'Неизвестная ошибка';
           const isCorsError = errorMsg.includes('CORS') || errorMsg.includes('Failed to fetch');
           const is404Error = errorMsg.includes('404') || errorMsg.includes('status: 404');
-          
           let userMessage = 'Не удалось загрузить данные о наследиях. ';
           if (isCorsError || window.location.protocol === 'file:') {
             userMessage += 'Для корректной работы сайта необходимо запустить его через локальный сервер (например, Live Server в VS Code или python -m http.server).';
@@ -182,7 +177,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (typeof places === 'undefined') {
       window.places = [];
     }
-    
     loadPlacesData();
   } catch (error) {
     console.error('Ошибка при инициализации страницы избранного:', error);
@@ -199,7 +193,6 @@ function initFavoritesPage() {
   if (typeof setupModals === 'function') {
     setupModals();
   }
-  
   const saveRouteBtn = document.getElementById('saveRoute');
   if (saveRouteBtn && typeof saveCustomRoute === 'function') {
     saveRouteBtn.addEventListener('click', saveCustomRoute);
@@ -209,18 +202,15 @@ function initFavoritesPage() {
 function setupFavoritesTabs() {
   const tabs = document.querySelectorAll('.favorites__tab-btn');
   const contents = document.querySelectorAll('.favorites__tab-content');
-
   tabs.forEach(tab => {
     tab.addEventListener('click', () => {
       const targetTab = tab.dataset.tab;
-
       tabs.forEach(t => {
         t.classList.remove('active');
         t.setAttribute('aria-selected', 'false');
       });
       tab.classList.add('active');
       tab.setAttribute('aria-selected', 'true');
-
       contents.forEach(content => {
         content.style.display = 'none';
       });
@@ -236,7 +226,6 @@ function renderFavoritesPlaces() {
   const grid = document.getElementById('favoritesPlacesGrid');
   const emptyMsg = document.getElementById('emptyPlaces');
   if (!grid) return;
-
   const placesData = typeof places !== 'undefined' ? places : (window.places || []);
   if (!Array.isArray(placesData) || placesData.length === 0) {
     console.error('Данные о местах не загружены');
@@ -244,27 +233,21 @@ function renderFavoritesPlaces() {
     if (emptyMsg) emptyMsg.style.display = 'block';
     return;
   }
-
   if (typeof getFavorites !== 'function') {
     console.error('Функция getFavorites не найдена');
     return;
   }
-
   const favorites = getFavorites();
   const favoritePlaces = placesData.filter(p => favorites.places.includes(p.id));
-
   if (favoritePlaces.length === 0) {
     grid.style.display = 'none';
     emptyMsg.style.display = 'block';
     return;
   }
-
   grid.style.display = 'grid';
   emptyMsg.style.display = 'none';
-
   const getPeriodNameFunc = typeof getPeriodName === 'function' ? getPeriodName : (p) => p || '';
   const getTypeNameFunc = typeof getTypeName === 'function' ? getTypeName : (t) => t || '';
-
   const normalizeImagePathFunc = typeof normalizeImagePath === 'function' ? normalizeImagePath : (path) => {
     if (!path) return '';
     if (path.startsWith('http://') || path.startsWith('https://')) return path;
@@ -274,7 +257,6 @@ function renderFavoritesPlaces() {
     }
     return isInPages ? `../${path}` : path;
   };
-  
   grid.innerHTML = favoritePlaces.map(place => {
     const hasImage = place.images && place.images.now && place.images.now.trim() !== '';
     const hasOldImage = place.images && place.images.old && place.images.old.trim() !== '';
@@ -298,7 +280,6 @@ function renderFavoritesPlaces() {
       </article>
     `;
   }).join('');
-
   grid.querySelectorAll('button.btn-secondary[data-id]').forEach(btn => {
     btn.addEventListener('click', () => {
       const id = Number(btn.dataset.id);
@@ -317,7 +298,6 @@ function renderFavoritesPlaces() {
       }
     });
   });
-
   grid.querySelectorAll('.favorite-btn[data-type="place"]').forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.stopPropagation();
@@ -334,27 +314,21 @@ function renderFavoritesRoutes() {
   const container = document.getElementById('favoritesRoutesList');
   const emptyMsg = document.getElementById('emptyRoutes');
   if (!container) return;
-
   if (typeof getFavorites !== 'function') {
     console.error('Функция getFavorites не найдена');
     return;
   }
-
   const favorites = getFavorites();
   const allRoutes = JSON.parse(localStorage.getItem('heritage_routes_v1') || '[]');
   const favoriteRoutes = allRoutes.filter(r => favorites.routes.includes(r.id));
-
   if (favoriteRoutes.length === 0) {
     container.style.display = 'none';
     emptyMsg.style.display = 'block';
     return;
   }
-
   container.style.display = 'block';
   emptyMsg.style.display = 'none';
-
   const estimateDurationFunc = typeof estimateDuration === 'function' ? estimateDuration : (count) => (count * 0.5).toFixed(1);
-
   container.innerHTML = favoriteRoutes.map(route => {
     const count = route.placeIds?.length || 0;
     const duration = route.durationHours || estimateDurationFunc(count);
@@ -376,13 +350,11 @@ function renderFavoritesRoutes() {
       </article>
     `;
   }).join('');
-
   container.querySelectorAll('button[data-action]').forEach(btn => {
     btn.addEventListener('click', () => {
       const id = Number(btn.dataset.id);
       const action = btn.dataset.action;
       const route = favoriteRoutes.find(r => r.id === id);
-
       if (action === 'show' && route) {
         localStorage.setItem('show_route_on_load', JSON.stringify({ 
           routeId: id, 
