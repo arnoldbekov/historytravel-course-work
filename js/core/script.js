@@ -570,10 +570,27 @@ function showStartPointSelectionHint() {
 function getSVGCoordinates(map, evt) {
   const svg = map.closest('svg') || map;
   if (!svg) return null;
+
+  // Normalize event coordinates to support MouseEvent, TouchEvent and PointerEvent
+  function getEventClientXY(e) {
+    if (!e) return null;
+    if (e.touches && e.touches.length) {
+      return { clientX: e.touches[0].clientX, clientY: e.touches[0].clientY };
+    }
+    if (e.changedTouches && e.changedTouches.length) {
+      return { clientX: e.changedTouches[0].clientX, clientY: e.changedTouches[0].clientY };
+    }
+    // PointerEvent / MouseEvent
+    return { clientX: e.clientX, clientY: e.clientY };
+  }
+
+  const coords = getEventClientXY(evt);
+  if (!coords) return null;
+
   try {
     const point = svg.createSVGPoint();
-    point.x = evt.clientX;
-    point.y = evt.clientY;
+    point.x = coords.clientX;
+    point.y = coords.clientY;
     const content =
       svg.querySelector('#mapContent') ||
       svg.querySelector('#mapContentRoutes') ||
@@ -585,8 +602,8 @@ function getSVGCoordinates(map, evt) {
     return { x: svgPoint.x, y: svgPoint.y };
   } catch (e) {
     const rect = svg.getBoundingClientRect();
-    const x = ((evt.clientX - rect.left) / rect.width) * 1000;
-    const y = ((evt.clientY - rect.top) / rect.height) * 700;
+    const x = ((coords.clientX - rect.left) / rect.width) * 1000;
+    const y = ((coords.clientY - rect.top) / rect.height) * 700;
     return { x: x, y: y };
   }
 }
@@ -664,7 +681,9 @@ function setupStartPointMapClick(map, opts = {}) {
       }
     }
   };
-  map.addEventListener('click', tempHandler, { once: false });
+  // Use Pointer events when available for more accurate coordinates on touch devices
+  const eventName = (window.PointerEvent) ? 'pointerup' : 'click';
+  map.addEventListener(eventName, tempHandler, { once: false });
 }
 
 function saveCustomRoute() {
