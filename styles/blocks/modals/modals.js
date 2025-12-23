@@ -18,12 +18,21 @@ function setupModals() {
   });
 }
 
+// Keep track of element that had focus before opening a modal
+let _lastFocusedElement = null;
+
 function openModal(id) {
   const modal = document.getElementById(id);
   if (modal) {
+    // Remember currently focused element so we can restore focus on close
+    try { _lastFocusedElement = document.activeElement; } catch (e) { _lastFocusedElement = null; }
     modal.setAttribute('aria-hidden', 'false');
     modal.classList.add('modal--visible');
     document.body.style.overflow = 'hidden';
+
+    // Move focus into modal for accessibility — focus first focusable element or modal dialog
+    const focusable = modal.querySelector('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+    if (focusable) focusable.focus(); else modal.focus();
   }
 }
 
@@ -31,9 +40,27 @@ function closeModal(modal) {
   if (!modal) return;
   const modalDialog = modal.querySelector('.modal-dialog');
   if (modalDialog) modalDialog.classList.remove('modal-single-image');
+  // If the currently focused element is inside the modal, restore focus to the opener
+  try {
+    const active = document.activeElement;
+    if (active && modal.contains(active)) {
+      if (_lastFocusedElement && document.contains(_lastFocusedElement)) {
+        _lastFocusedElement.focus();
+      } else {
+        // fallback: move focus to body to ensure nothing inside hidden modal remains focused
+        document.body.focus();
+      }
+    }
+  } catch (e) {
+    // ignore focus errors
+  }
+
   modal.setAttribute('aria-hidden', 'true');
   modal.classList.remove('modal--visible');
   document.body.style.overflow = '';
+
+  // clear saved opener
+  _lastFocusedElement = null;
 }
 
 function openObjectModal(place) {
