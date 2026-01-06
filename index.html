@@ -58,12 +58,12 @@
     <div class="container">
       <h2 id="timeline-title">Исторические эпохи</h2>
       <p class="section-lead">Выберите период, чтобы увидеть объекты, относящиеся к определённой эпохе, и ключевые события времени.</p>
-      <div class="timeline" role="tablist" aria-label="Временная шкала">
-        <button class="period-btn active" data-period="all" role="tab" aria-selected="true">Все эпохи</button>
-        <button class="period-btn" data-period="ancient" role="tab" aria-selected="false">Древность</button>
-        <button class="period-btn" data-period="medieval" role="tab" aria-selected="false">Средневековье</button>
-        <button class="period-btn" data-period="modern" role="tab" aria-selected="false">Новое время</button>
-        <button class="period-btn" data-period="contemporary" role="tab" aria-selected="false">Современность</button>
+    <div class="timeline">
+        <button class="period-btn active" data-period="all">Все эпохи</button>
+        <button class="period-btn" data-period="ancient">Древность</button>
+        <button class="period-btn" data-period="medieval">Средневековье</button>
+        <button class="period-btn" data-period="modern">Новое время</button>
+        <button class="period-btn" data-period="contemporary">Современность</button>
       </div>
       <div class="timeline-events" id="timelineEvents" aria-live="polite"></div>
     </div>
@@ -80,15 +80,15 @@
         <div class="map-wrapper map__wrapper" role="region" aria-label="Карта культурных объектов">
           <div class="map-tooltip map__tooltip" id="mapTooltip" role="tooltip" aria-hidden="true">
           <div class="tooltip-content">
-            <img class="tooltip-image" src="" alt="" loading="lazy">
+            <img class="tooltip-image" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" alt="" loading="lazy">
             <div class="tooltip-text">
-              <h4 class="tooltip-title"></h4>
+              <h3 class="tooltip-title">Название объекта</h3>
               <p class="tooltip-description"></p>
               <button class="tooltip-details-btn" type="button">Подробнее</button>
             </div>
           </div>
         </div>
-          <div class="map-controls map__controls" aria-label="Управление масштабом карты">
+          <div class="map-controls map__controls" role="group" aria-label="Управление масштабом карты">
             <button type="button" id="zoomInBtn" class="map-zoom-btn map__zoom-btn" aria-label="Приблизить карту">+</button>
             <button type="button" id="zoomOutBtn" class="map-zoom-btn map__zoom-btn" aria-label="Отдалить карту">−</button>
             <button type="button" id="zoomResetBtn" class="map-zoom-reset map__zoom-reset" aria-label="Показать карту целиком">Сброс</button>
@@ -134,15 +134,15 @@
     <div class="map-modal-wrapper">
       <div class="map-tooltip map__tooltip" id="mapTooltipModal" role="tooltip" aria-hidden="true">
         <div class="tooltip-content">
-          <img class="tooltip-image" src="" alt="" loading="lazy">
+          <img class="tooltip-image" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" alt="" loading="lazy">
           <div class="tooltip-text">
-            <h4 class="tooltip-title"></h4>
+            <h3 class="tooltip-title">Название объекта</h3>
             <p class="tooltip-description"></p>
             <button class="tooltip-details-btn" type="button">Подробнее</button>
           </div>
         </div>
       </div>
-      <div class="map-controls map__controls" aria-label="Управление масштабом карты">
+      <div class="map-controls map__controls" role="group" aria-label="Управление масштабом карты">
         <button type="button" id="zoomInBtnModal" class="map-zoom-btn map__zoom-btn" aria-label="Приблизить карту">+</button>
         <button type="button" id="zoomOutBtnModal" class="map-zoom-btn map__zoom-btn" aria-label="Отдалить карту">−</button>
         <button type="button" id="zoomResetBtnModal" class="map-zoom-reset map__zoom-reset" aria-label="Показать карту целиком">Сброс</button>
@@ -165,7 +165,7 @@
 <div class="modal" id="objectModal" aria-hidden="true">
   <div class="modal-dialog" role="dialog" aria-labelledby="objTitle" aria-modal="true">
     <button class="close" type="button" aria-label="Закрыть окно с описанием объекта">×</button>
-    <h2 id="objTitle"></h2>
+    <h2 id="objTitle">Описание объекта</h2>
     <div id="objContent"></div>
   </div>
 </div>
@@ -185,7 +185,7 @@
     <button class="close" type="button" aria-label="Закрыть окно планирования маршрута">×</button>
     <h3 id="routeModalTitle">Создать свой маршрут</h3>
     <p class="route-modal-hint">Отметьте объекты, которые хотите включить в маршрут, затем введите название и сохраните.</p>
-    <div id="routeChecklist" class="route-checklist" aria-label="Список объектов для построения маршрута"></div>
+    <div id="routeChecklist" class="route-checklist" role="group" aria-label="Список объектов для построения маршрута"></div>
     <div class="route-start-point">
       <label class="route-name-label">Начальная точка маршрута</label>
       <button id="selectStartPoint" type="button" class="btn-secondary">Указать на карте</button>

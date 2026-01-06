@@ -24,13 +24,13 @@ function loadPlacesData() {
           places = data;
           return;
         }
-        throw new Error('Данные в файле sites.json некорректны.');
+          throw new Error('Данные в файле sites.json некорректны.');
       }).catch(() => loadPlacesDataFallback())
     : loadPlacesDataFallback()
   ).finally(() => {
     if (!Array.isArray(places) || places.length === 0) {
       loadPromise = null;
-    }
+  }
   });
   return loadPromise;
 }
