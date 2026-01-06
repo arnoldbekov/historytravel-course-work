@@ -68,7 +68,11 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   const isMobile = window.innerWidth <= 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
   if (window.AOS && !isMobile) {
-    AOS.init({ duration: 800, once: true, offset: 100, easing: 'ease-out-cubic', delay: 0 });
+    try {
+      AOS.init({ duration: 800, once: true, offset: 100, easing: 'ease-out-cubic', delay: 0 });
+    } catch (e) {
+      console.error('AOS init failed on main page', e);
+    }
   }
   window.addEventListener('hashchange', () => {
     if (window.location.hash === '#map') {
