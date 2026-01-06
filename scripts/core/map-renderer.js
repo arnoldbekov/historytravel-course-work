@@ -38,9 +38,14 @@ function renderMapZones(mapContentId, zonesData) {
     mapContent.appendChild(g);
   });
 }
+function getMapZonesPath() {
+  const pathname = window.location.pathname || '';
+  const isPageContext = pathname.includes('/pages/') || pathname.includes('pages\\');
+  return isPageContext ? '../../data/map-zones.json' : 'data/map-zones.json';
+}
 async function loadAndRenderMapZones(mapContentId) {
   try {
-    const dataPath = '/data/map-zones.json';
+    const dataPath = getMapZonesPath();
     const response = await fetch(dataPath);
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
     const zonesData = await response.json();
