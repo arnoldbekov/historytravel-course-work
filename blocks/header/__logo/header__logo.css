@@ -1,0 +1,65 @@
+.header__logo-link {
+  text-decoration: none;
+  color: inherit;
+  display: inline-block;
+  transition: opacity 0.3s ease;
+}
+.header__logo-link:hover {
+  opacity: 0.8;
+}
+.header__logo-img {
+  height: 70px;
+  width: auto;
+  display: block;
+  opacity: 0.85;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
+  animation: logoBreath 3s ease-in-out infinite;
+}
+.header__logo-link:hover .header__logo-img {
+  animation-play-state: paused;
+  opacity: 1;
+  transform: scale(1.1);
+}
+@media (max-width: 992px) {
+  .header__logo-img {
+    height: 60px;
+  }
+}
+@media (max-width: 768px) {
+  .header__logo-img {
+    height: 50px;
+  }
+}
+@media (max-width: 480px) {
+  .header__logo-img {
+    height: 45px;
+  }
+}
+.logo-link {
+  text-decoration: none;
+  color: inherit;
+  display: inline-block;
+  transition: opacity 0.3s ease;
+}
+.logo-link:hover {
+  opacity: 0.8;
+}
+.logo-img {
+  height: 70px;
+  width: auto;
+  display: block;
+  opacity: 0.85;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
+  animation: logoBreath 3s ease-in-out infinite;
+}
+.logo-link:hover .logo-img {
+  animation-play-state: paused;
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+
+
+
+
+

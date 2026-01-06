@@ -1,0 +1,6 @@
+@import url("../../common/_vars.css");
+.single-image-wrapper { width:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; margin:0 auto; padding:2rem 0; text-align:center; flex:0 0 auto; }
+.single-image-wrapper--small img { max-height:40vh; height:auto; object-fit:contain; }
+.single-image-wrapper--compact { padding:1rem 0 !important; }
+.single-image-wrapper--compact img { max-height:22vh; }
+.single-image-wrapper__image { width:100%; max-width:100%; height:400px; max-height:65vh; object-fit:cover; object-position:center; border-radius:12px; box-shadow:0 4px 16px rgba(0,0,0,0.1); margin:0 auto; display:block; }

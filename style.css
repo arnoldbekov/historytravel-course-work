@@ -1,0 +1,47 @@
+@import url("blocks/reset/reset.css");
+@import url("common/_vars.css");
+@import url("common/_animations.css");
+@import url("common/_base.css");
+@import url("blocks/typography/typography.css");
+
+@import url("blocks/button/button.css");
+@import url("blocks/button/_theme/button_theme_primary.css");
+
+@import url("blocks/header/header.css");
+@import url("blocks/header/__logo/header__logo.css");
+@import url("blocks/header/__nav/header__nav.css");
+@import url("blocks/header/__toggle/header__toggle.css");
+
+@import url("blocks/hero/hero.css");
+
+@import url("blocks/cards/cards.css");
+
+@import url("blocks/map-svg/map-svg.css");
+
+@import url("blocks/gallery/gallery.css");
+
+@import url("blocks/timeline/timeline.css");
+
+@import url("blocks/routes/routes.css");
+
+@import url("blocks/favorites/favorites.css");
+
+@import url("blocks/footer/footer.css");
+
+@import url("blocks/modals/modals.css");
+
+@import url("blocks/tabs/tabs.css");
+
+@import url("blocks/forms/forms.css");
+
+@import url("blocks/stats/stats.css");
+
+@import url("blocks/animations/animations.css");
+@import url("blocks/compare/compare.css");
+@import url("blocks/favorite-btn/favorite-btn.css");
+@import url("blocks/object-card/object-card.css");
+@import url("blocks/object-figure/object-figure.css");
+@import url("blocks/objects-grid/objects-grid.css");
+@import url("blocks/single-image-wrapper/single-image-wrapper.css");
+
+

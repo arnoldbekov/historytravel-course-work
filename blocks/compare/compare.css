@@ -1,0 +1,11 @@
+@import url("../../common/_vars.css");
+.compare { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-top:1rem; overflow:hidden; }
+.compare::-webkit-scrollbar { display:none; }
+.compare { -ms-overflow-style:none; scrollbar-width:none; }
+.compare > div { display:flex; flex-direction:column; overflow:hidden; }
+.compare__image { width:100%; height:360px; max-height:400px; object-fit:cover; border-radius:8px; }
+.compare__description { grid-column:1 / -1; margin:0.75rem 0 0 0; padding:1rem; background:rgba(255,255,255,0.95); border-radius:8px; font-size:0.95rem; line-height:1.6; color:var(--text); text-align:left; border-left:3px solid var(--gold); width:100%; }
+@media (max-width: 992px) {
+  .compare { grid-template-columns: 1fr; }
+  .compare__image { height: 300px; max-height: 320px; }
+}

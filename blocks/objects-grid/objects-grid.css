@@ -1,0 +1,61 @@
+@import url("../../common/_vars.css");
+@import url("../../common/_animations.css");
+.objects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.5rem;
+  animation: fadeInUp 0.6s ease-out;
+}
+.objects-grid--full {
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  animation: fadeInUp 0.6s ease-out;
+}
+.objects-grid__card {
+  animation: cardSlideIn 0.5s ease-out both;
+  padding-right: 2.8rem;
+}
+.objects-grid__card:nth-child(1) { animation-delay: 0.1s; }
+.objects-grid__card:nth-child(2) { animation-delay: 0.2s; }
+.objects-grid__card:nth-child(3) { animation-delay: 0.3s; }
+.objects-grid__card:nth-child(4) { animation-delay: 0.4s; }
+.objects-grid__card:nth-child(5) { animation-delay: 0.5s; }
+.objects-grid__card:nth-child(6) { animation-delay: 0.6s; }
+.objects-grid__card:nth-child(n+7) { animation-delay: 0.7s; }
+.objects-grid--full .objects-grid__card {
+  animation: cardSlideIn 0.5s ease-out both;
+}
+.objects-grid--full .objects-grid__card:nth-child(1) { animation-delay: 0.1s; }
+.objects-grid--full .objects-grid__card:nth-child(2) { animation-delay: 0.2s; }
+.objects-grid--full .objects-grid__card:nth-child(3) { animation-delay: 0.3s; }
+.objects-grid--full .objects-grid__card:nth-child(4) { animation-delay: 0.4s; }
+.objects-grid--full .objects-grid__card:nth-child(5) { animation-delay: 0.5s; }
+.objects-grid--full .objects-grid__card:nth-child(6) { animation-delay: 0.6s; }
+.objects-grid--full .objects-grid__card:nth-child(n+7) { animation-delay: 0.7s; }
+@media (min-width: 992px) {
+  .objects-grid--full {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  }
+}
+@media (min-width: 1280px) {
+  .objects-grid--full {
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  }
+}
+.objects__grid {
+  display: grid;
+  gap: 1.25rem;
+  animation: fadeInUp 0.6s ease-out;
+}
+.objects__grid--full {
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  animation: fadeInUp 0.6s ease-out;
+}
+.objects-grid .object-card,
+.objects__grid .object-card {
+  animation: cardSlideIn 0.5s ease-out both;
+  padding-right: 2.8rem;
+}
+.objects-grid .object-card:nth-child(1),
+.objects__grid .object-card:nth-child(1) { animation-delay: 0.1s; }
+.objects-grid .object-card:nth-child(2),
+.objects__grid .object-card:nth-child(2) { animation-delay: 0.2s; }

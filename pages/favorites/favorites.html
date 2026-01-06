@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Избранное — HistoryTravel</title>
+  <meta name="description" content="HistoryTravel — ваши избранные объекты культурного наследия и маршруты.">
+  <link rel="stylesheet" href="../../style.css?v=12">
+  <link rel="icon" href="../../images/interface/logo.png" type="image/png" sizes="32x32">
+  <link rel="shortcut icon" href="../../images/interface/logo.png" type="image/png">
+  <link rel="apple-touch-icon" href="../../images/interface/logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lora:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+<header class="header">
+  <div class="container header-inner header__inner">
+    <a href="../../index.html" class="logo-link header__logo-link"><img src="../../images/interface/logo.png" alt="HistoryTravel" class="logo-img header__logo-img"></a>
+    <button class="header__menu-toggle" aria-label="Открыть меню" aria-expanded="false" id="menuToggle">
+      <span class="header__menu-icon"></span>
+      <span class="header__menu-icon"></span>
+      <span class="header__menu-icon"></span>
+    </button>
+    <nav class="nav header__nav" aria-label="Основная навигация сайта" id="mainNav">
+      <a href="../../index.html#map" class="header__nav-link">Карта</a>
+      <a href="../periods/periods.html" class="header__nav-link">Эпохи</a>
+      <a href="../routes/routes.html" class="header__nav-link">Маршруты</a>
+      <a href="../gallery/gallery.html" class="header__nav-link">Галерея</a>
+      <a href="../favorites/favorites.html" class="header__nav-link">Избранное</a>
+      <a href="../about/about.html" class="header__nav-link">О проекте</a>
+    </nav>
+  </div>
+</header>
+<main>
+  <section class="favorites-section favorites" aria-labelledby="favorites-title" data-aos="fade-up">
+    <div class="container">
+      <h2 id="favorites-title">Избранные объекты и маршруты</h2>
+      <p class="section-lead">Здесь собраны ваши избранные объекты культурного наследия и маршруты. Вы можете удалить их из избранного, нажав на иконку сердца.</p>
+      <div class="favorites-tabs favorites__tabs" role="tablist" aria-label="Вкладки избранного">
+        <button class="tab-btn favorites__tab-btn active" data-tab="places" role="tab" aria-selected="true">Объекты</button>
+        <button class="tab-btn favorites__tab-btn" data-tab="routes" role="tab" aria-selected="false">Маршруты</button>
+      </div>
+      <div class="favorites-content favorites__content">
+        <div id="favoritesPlaces" class="tab-content favorites__tab-content active" role="tabpanel" aria-labelledby="tab-places">
+          <div class="objects-grid objects__grid" id="favoritesPlacesGrid">
+          </div>
+          <p class="empty-message" id="emptyPlaces" style="display: none;">У вас пока нет избранных объектов. Добавьте объекты в избранное, нажав на иконку сердца на карточке объекта.</p>
+        </div>
+        <div id="favoritesRoutes" class="tab-content favorites__tab-content" role="tabpanel" aria-labelledby="tab-routes" style="display: none;">
+          <div id="favoritesRoutesList">
+          </div>
+          <p class="empty-message" id="emptyRoutes" style="display: none;">У вас пока нет избранных маршрутов. Добавьте маршруты в избранное, нажав на иконку сердца рядом с маршрутом.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+<div class="modal" id="objectModal" aria-hidden="true">
+  <div class="modal-dialog" role="dialog" aria-labelledby="objTitle" aria-modal="true">
+    <button class="close" type="button" aria-label="Закрыть окно с описанием объекта">×</button>
+    <h2 id="objTitle"></h2>
+    <div id="objContent"></div>
+  </div>
+</div>
+<div class="modal" id="compareModal" aria-hidden="true">
+  <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="compareTitle">
+    <button class="close" type="button" aria-label="Закрыть окно сравнения">×</button>
+    <h3 id="compareTitle">Тогда и сейчас</h3>
+    <div class="compare" id="compareContainer"></div>
+  </div>
+</div>
+<div class="modal" id="routeModal" aria-hidden="true">
+  <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="routeModalTitle">
+    <button class="close" type="button" aria-label="Закрыть окно планирования маршрута">×</button>
+    <h3 id="routeModalTitle">Создать свой маршрут</h3>
+    <p class="route-modal-hint">Отметьте объекты, которые хотите включить в маршрут, затем введите название и сохраните.</p>
+    <div id="routeChecklist" class="route-checklist" aria-label="Список объектов для построения маршрута"></div>
+    <div class="route-start-point">
+      <label class="route-name-label">Начальная точка маршрута</label>
+      <button id="selectStartPoint" type="button" class="btn-secondary">Указать на карте</button>
+      <span id="startPointDisplay" class="start-point-display"></span>
+    </div>
+    <label class="route-name-label" for="routeNameInput">Название маршрута</label>
+    <input id="routeNameInput" type="text" placeholder="Например, «Выходные в историческом центре»">
+    <button id="saveRoute" class="btn-primary">Сохранить маршрут</button>
+  </div>
+</div>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script type="module" src="../../scripts/core/map-renderer.js"></script>
+<script type="module" src="../../scripts/core/script.js"></script>
+<script type="module" src="../../scripts/init/mobile-init.js"></script>
+<script type="module" src="../../scripts/core/main.js"></script>
+<script type="module" src="../../blocks/favorites/favorites.js"></script>
+</body>
+</html>
