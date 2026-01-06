@@ -16,18 +16,7 @@ function getDataPath() {
 }
 function loadPlacesData() {
   if (loadPromise) return loadPromise;
-  const dataPath = getDataPath();
-  loadPromise = (typeof axios !== 'undefined'
-    ? axios.get(dataPath).then(response => {
-        const data = response.data;
-        if (Array.isArray(data) && data.length > 0) {
-          places = data;
-          return;
-        }
-          throw new Error('Данные в файле sites.json некорректны.');
-      }).catch(() => loadPlacesDataFallback())
-    : loadPlacesDataFallback()
-  ).finally(() => {
+  loadPromise = loadPlacesDataFallback().finally(() => {
     if (!Array.isArray(places) || places.length === 0) {
       loadPromise = null;
   }
