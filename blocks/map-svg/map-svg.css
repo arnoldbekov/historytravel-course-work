@@ -828,7 +828,6 @@ body:has(#pmrMapRoutes) .map-and-list .map__wrapper {
     stroke-width: 2.5;
   }
   .start-point-marker {
-    r: 8;
     stroke-width: 2;
   }
 }
